@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WaveLine Surf Shop</title>
+<style>
+  /* Reset */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fff;
+    color: #222;
+  }
+  header {
+    background-color: #004a6e;
+    color: #fff;
+    padding: 18px 20px;
+    text-align: center;
+    position: sticky;
+    top: 0; z-index: 1000;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  }
+  header h1 {
+    margin: 0;
+    font-weight: 900;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+  }
+  nav {
+    display: flex;
+    justify-content: center;
+    background-color: #023047;
+    box-shadow: inset 0 -2px 6px rgba(0,0,0,0.3);
+  }
+  nav button {
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 14px 24px;
+    font-weight: 700;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  nav button:hover, nav button.active {
+    background-color: #0288d1;
+  }
+  main {
+    max-width: 1100px;
+    margin: 30px auto 60px;
+    padding: 0 15px;
+  }
+  /* Hero */
+  .hero {
+    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1400&q=80') no-repeat center center/cover;
+    height: 380px;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #e0f7fa;
+    font-size: 3rem;
+    font-weight: 900;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.75);
+    margin-bottom: 45px;
+  }
+  /* Section Titles */
+  h2 {
+    font-weight: 900;
+    color: #023047;
+    margin-bottom: 25px;
+    font-size: 2rem;
+  }
+  /* Products grid */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 26px;
+  }
+  .product-card {
+    background: #f9f9f9;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+  }
+  .product-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  .product-info {
+    padding: 18px 22px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .product-info h3 {
+    margin: 0 0 14px 0;
+    font-size: 1.3rem;
+    color: #0277bd;
+  }
+  .product-info p {
+    flex-grow: 1;
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 18px;
+  }
+  .price {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #00796b;
+    margin-bottom: 18px;
+  }
+  .buy-btn {
+    background-color: #0288d1;
+    border: none;
+    color: white;
+    font-weight: 700;
+    padding: 14px 0;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+  .buy-btn:hover {
+    background-color: #015f8b;
+  }
+  /* Pages */
+  section.page {
+    display: none;
+    animation: fadein 0.4s ease forwards;
+  }
+  section.page.active {
+    display: block;
+  }
+  @keyframes fadein {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  /* About */
+  .about {
+    background: #f3f6f8;
+    padding: 28px 26px;
+    border-radius: 14px;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.1);
+    font-size: 1.15rem;
+    color: #333;
+    line-height: 1.65;
+  }
+  /* FAQ */
+  .faq {
+    background: #f9f9f9;
+    border-radius: 14px;
+    padding: 25px 22px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    max-width: 900px;
+    margin: auto;
+  }
+  .faq h2 {
+    color: #0277bd;
+  }
+  .faq-item {
+    margin-bottom: 18px;
+  }
+  .faq-item strong {
+    color: #00796b;
+  }
+  /* Tips page */
+  .tips-posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+    gap: 26px;
+  }
+  .tip-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 22px rgba(0,0,0,0.12);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .tip-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  .tip-text {
+    padding: 15px 18px;
+    font-size: 1rem;
+    color: #222;
+    flex-grow: 1;
+  }
+  /* Footer */
+  footer {
+    background-color: #023047;
+    color: white;
+    text-align: center;
+    padding: 20px 15px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    user-select: none;
+  }
+  footer a {
+    color: #80d8ff;
+    text-decoration: underline;
+  }
+  /* Responsive */
+  @media (max-width: 640px) {
+    nav {
+      flex-wrap: wrap;
+    }
+    .hero {
+      height: 280px;
+      font-size: 2.3rem;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>WaveLine Surf Shop</h1>
+  <nav>
+    <button class="nav-btn active" data-target="home">Home</button>
+    <button class="nav-btn" data-target="products">Prodotti</button>
+    <button class="nav-btn" data-target="about">Chi Siamo</button>
+    <button class="nav-btn" data-target="faq">FAQ</button>
+    <button class="nav-btn" data-target="tips">Tips Surfisti</button>
+  </nav>
+</header>
+<main>
+  <!-- Home -->
+  <section id="home" class="page active">
+    <div class="hero" aria-label="Surf con montagna sullo sfondo">
+      Vivi l'onda. Senti la montagna.
+    </div>
+    <p style="max-width:700px; margin:auto; font-size:1.2rem; text-align:center; padding-bottom:30px;">
+      WaveLine nasce dalla passione per il surf e l’amore per la natura.  
+      Vogliamo offrire a ogni surfista accessori e abbigliamento di qualità, con uno stile che racconta identità e libertà.
+      Seguici su <a href="https://www.instagram.com/wave_line_/" target="_blank" rel="noopener noreferrer">@wave_line_</a>.
+    </p>
+  </section>
+
+  <!-- Prodotti -->
+  <section id="products" class="page" aria-label="Catalogo prodotti WaveLine Surf Shop">
+    <h2>I Nostri Prodotti</h2>
+    <div class="products-grid">
+      <!-- Prodotto 1 -->
+      <div class="product-card">
+        <img class="product-img" src="https://ae01.alicdn.com/kf/Hb8a78e9ac69d4b4ca27f26b9857d86f6J.jpg" alt="Leash Surf 6mm">
+        <div class="product-info">
+          <h3>Leash Surf 6mm</h3>
+          <p>Leash resistente, elastico, per tavole da surf di ogni tipo, perfetto per onde medie e grandi.</p>
+          <div class="price">€24,00</div>
+          <button class="buy-btn" data-name="Leash Surf 6mm" data-price="24.00">Compra con PayPal</button>
+        </div>
+      </div>
+      <!-- Prodotto 2 -->
+      <div class="product-card">
+        <img class="product-img" src="https://ae01.alicdn.com/kf/Hf7a8dcb7d3f14cc4a807a2d6680eae1eD.jpg" alt="Poncho da Surf">
+        <div class="product-info">
+          <h3>Poncho da Surf</h3>
+          <p>Poncho assorbente, morbido e traspirante, perfetto per asciugarti dopo il surf.</p>
+          <div class="price">€38,00</div>
+          <button class="buy-btn" data-name="Poncho da Surf" data-price="38.00">Compra con PayPal</button>
+        </div>
+      </div>
+      <!-- Prodotto 3 -->
+      <div class="product-card">
+        <img class="product-img" src="https://ae01.alicdn.com/kf/H3e2a0d1aa1e04eaabf601cc8fcb9e41fD.jpg" alt="Mutandina Surf">
+        <div class="product-info">
+          <h3>Mutandina da Surf</h3>
+          <p>Mutandina elastica e resistente per sessioni di surf confortevoli e sicure.</p>
+          <div class="price">€16,00</div>
+          <button class="buy-btn" data-name="Mutandina da Surf" data-price="16.00">Compra con PayPal</button>
+        </div>
+      </div>
+      <!-- Prodotto 4 -->
+      <div class="product-card">
+        <img class="product-img" src="https://ae01.alicdn.com/kf/H7e8c1a59a41344efb1b1b7b3c2d7f1f11Z.jpg" alt="Guanti da Surf">
+        <div class="product-info">
+          <h3>Guanti da Surf</h3>
+          <p>Guanti impermeabili e caldi, ideali per surfare in acque fredde.</p>
+          <div class="price">€20,00</div>
+          <button class="buy-btn" data-name="Guanti da Surf" data-price="20.00">Compra con PayPal</button>
+        </div>
+      </div>
+      <!-- Prodotto 5 -->
+      <div class="product-card">
+        <img class="product-img" src="https://ae01.alicdn.com/kf/H8e8d1a85c1234ab49a2345b87654321deF.jpg" alt="Cappello da Surf">
+        <div class="product-info">
+          <h3>Cappello da Surf</h3>
+          <p>Cappello leggero con visiera, perfetto per proteggerti dal sole in spiaggia.</p>
+          <div class="price">€14,00</div>
+          <button class="buy-btn" data-name="Cappello da Surf" data-price="14.00">Compra con PayPal</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chi Siamo -->
+  <section id="about" class="page" aria-label="Chi siamo WaveLine Surf Shop">
+    <div class="about">
+      <h2>La Nostra Storia</h2>
+      <p>
+        WaveLine è nata dall'incontro di due passioni profonde: il surf e la voglia di creare un’identità autentica per ogni surfista.
+        Abbiamo iniziato come semplici appassionati, affascinati dal mare e dalle montagne che incorniciano le nostre onde.
+        Volevamo qualcosa di più di un semplice negozio: un luogo dove la cultura del surf si fondesse con la qualità degli accessori e dell’abbigliamento.
+        Qui da WaveLine, ogni prodotto racconta una storia, la nostra e la tua.
+      </p>
+      <p>Contattaci: <a href="mailto:wavelinesurfline@gmail.com">wavelinesurfline@gmail.com</a></p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="page" aria-label="Domande frequenti WaveLine Surf Shop">
+    <div class="faq">
+      <h2>Domande Frequenti</h2>
+      <div class="faq-item">
+        <strong>Come posso pagare?</strong>
+        <p>Accettiamo solo pagamenti tramite PayPal all’indirizzo <em>massipazzi93@hotmail.it</em>.</p>
+      </div>
+      <div class="faq-item">
+        <strong>Quanto tempo ci vuole per la spedizione?</strong>
+        <p>La spedizione standard impiega da 5 a 10 giorni lavorativi.</p>
+      </div>
+      <div class
